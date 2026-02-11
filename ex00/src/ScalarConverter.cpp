@@ -110,3 +110,12 @@ bool ScalarConverter::isDouble(const std::string& literal) {
 	return true;
 }
 
+/**
+ * @brief Checks if char is displayable (ASCII 32-126)
+ * @param c Character to check
+ * @return True if displayable
+ */
+bool ScalarConverter::isDisplayable(char c) {
+	return (c >= 32 && c <= 126);
+}
+
