@@ -57,7 +57,7 @@ bool ScalarConverter::isInt(const std::string& literal) {
 	if (literal[0] == '+' || literal[0] == '-')
 		i++;
 	
-	if (i <= literal.length())
+	if (i >= literal.length())
 		return false;
 	
 	while (i < literal.length()) {
@@ -119,3 +119,114 @@ bool ScalarConverter::isDisplayable(char c) {
 	return (c >= 32 && c <= 126);
 }
 
+// ====================
+//  Conversion methods
+// ====================
+
+/**
+ * @brief Converts from char and displays all types
+ * @param c Character value
+ */
+void ScalarConverter::convertFromChar(char c) {
+	// char
+	if (isDisplayable(c))
+		std::cout << "char: '" << c << "'" << std::endl;
+	else
+		std::cout << "char: Non displayable" << std::endl;
+		
+	// int
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	
+	// float
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
+	
+	// double
+	std::cout << "double: " << static_cast<double>(c) << std::endl;
+}
+
+/**
+ * @brief Converts from int and displays all types
+ * @param n Integer value
+ */
+void ScalarConverter::convertFromInt(int n) {
+	// char
+	if (n < 0 || n > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (isDisplayable(static_cast<char>(n)))
+		std::cout << "char: '" << static_cast<char>(n) << "'" << std::endl;
+	else	
+		std::cout << "char: Non displayable" << std::endl;
+		
+	// int
+	std::cout << "int: " << n << std::endl;
+	
+	// float
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
+	
+	// double
+	std::cout << "double: " << static_cast<double>(n) << std::endl;
+}
+
+/**
+ * @brief Converts from float and displays all types
+ * @param f Float value
+ */
+void ScalarConverter::convertFromFloat(float f) {
+	// char
+	if (std::isnan(f) || std::isinf(f))
+		std::cout << "char: impossible" << std::endl;
+	else if (f < 0 || f > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (isDisplayable(static_cast<char>(f)))
+		std::cout << "char: '" << static_cast<char>(f) << "'" << std::endl;
+	else	
+		std::cout << "char: Non displayable" << std::endl;
+		
+	// int
+	if (std::isnan(f) || std::isinf(f))
+		std::cout << "int: impossible" << std::endl;
+	else if (f > INT_MAX || f < INT_MIN)
+		std::cout << "int: impossible" << std::endl;
+	else	
+		std::cout << "int: " << static_cast<int>(f) << std::endl;
+	
+	// float
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << f << "f" << std::endl;
+	
+	// double
+	std::cout << "double: " << static_cast<double>(f) << std::endl;
+}
+
+/**
+ * @brief Converts from double and displays all types
+ * @param d Double value
+ */
+void ScalarConverter::convertFromDouble(double d) {
+	// char
+	if (std::isnan(d) || std::isinf(d))
+		std::cout << "char: impossible" << std::endl;
+	else if (d < 0 || d > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if (isDisplayable(static_cast<char>(d)))
+		std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
+	else	
+		std::cout << "char: Non displayable" << std::endl;
+		
+	// int
+	if (std::isnan(d) || std::isinf(d))
+		std::cout << "int: impossible" << std::endl;
+	else if (d > INT_MAX || d < INT_MIN)
+		std::cout << "int: impossible" << std::endl;
+	else	
+		std::cout << "int: " << static_cast<int>(d) << std::endl;
+	
+	// float
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << static_cast<int>(d) << "f" << std::endl;
+	
+	// double
+	std::cout << "double: " << d << std::endl;
+}
