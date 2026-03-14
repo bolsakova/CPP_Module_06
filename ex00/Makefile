@@ -3,7 +3,7 @@ NAME = ex00
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 
-FILES = main
+FILES = main ScalarConverter
 
 SRCDIR = src
 

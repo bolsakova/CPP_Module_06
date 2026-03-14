@@ -225,7 +225,7 @@ void ScalarConverter::convertFromDouble(double d) {
 	
 	// float
 	std::cout << std::fixed << std::setprecision(1);
-	std::cout << "float: " << static_cast<int>(d) << "f" << std::endl;
+	std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
 	
 	// double
 	std::cout << "double: " << d << std::endl;
