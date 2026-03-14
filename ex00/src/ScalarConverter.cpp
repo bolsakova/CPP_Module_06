@@ -230,3 +230,108 @@ void ScalarConverter::convertFromDouble(double d) {
 	// double
 	std::cout << "double: " << d << std::endl;
 }
+
+// ====================
+//  Conversion methods
+// ====================
+
+void ScalarConverter::convert(const std::string& literal) {
+	if (literal.empty())
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
+		return;
+	}
+
+	// 1) char literal: 'c'
+	if (isChar(literal))
+	{
+		convertFromChar(literal[1]);
+		return;
+	}
+
+	// 2) int literal: 42, -42, +42
+	if (isInt(literal))
+	{
+		char* end = NULL;
+		errno = 0;
+		long value = std::strtol(literal.c_str(), &end, 10);
+
+		if (errno == ERANGE || end == literal.c_str() || *end != '\0'
+			|| value > INT_MAX || value < INT_MIN)
+		{
+			std::cout << "char: impossible" << std::endl;
+			std::cout << "int: impossible" << std::endl;
+			std::cout << "float: impossible" << std::endl;
+			std::cout << "double: impossible" << std::endl;
+			return;
+		}
+		convertFromInt(static_cast<int>(value));
+		return;
+	}
+
+	// 3) float literal: 42.0f, nanf, +inff, -inff
+	if (isFloat(literal))
+	{
+		if (literal == "nanf")
+			convertFromFloat(std::numeric_limits<float>::quiet_NaN());
+		else if (literal == "+inff")
+			convertFromFloat(std::numeric_limits<float>::infinity());
+		else if (literal == "-inff")
+			convertFromFloat(-std::numeric_limits<float>::infinity());
+		else
+		{
+			char* end = NULL;
+			errno = 0;
+			double value = std::strtod(literal.c_str(), &end);
+	
+			if (errno == ERANGE || end == literal.c_str() || *end != 'f'
+				|| *(end + 1) != '\0')
+			{
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+				std::cout << "float: impossible" << std::endl;
+				std::cout << "double: impossible" << std::endl;
+				return;
+			}
+			convertFromFloat(static_cast<float>(value));
+		}
+		return;
+	}
+
+	// 4) double literal: 42.0, nan, +inf, -inf
+	if (isDouble(literal))
+	{
+		if (literal == "nan")
+			convertFromDouble(std::numeric_limits<double>::quiet_NaN());
+		else if (literal == "+inf")
+			convertFromDouble(std::numeric_limits<double>::infinity());
+		else if (literal == "-inf")
+			convertFromDouble(-std::numeric_limits<double>::infinity());
+		else
+		{
+			char* end = NULL;
+			errno = 0;
+			double value = std::strtod(literal.c_str(), &end);
+	
+			if (errno == ERANGE || end == literal.c_str() || *end != '\0')
+			{
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+				std::cout << "float: impossible" << std::endl;
+				std::cout << "double: impossible" << std::endl;
+				return;
+			}
+			convertFromDouble(value);
+		}
+		return;
+	}
+
+	// Unknown literal format
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: impossible" << std::endl;
+	std::cout << "double: impossible" << std::endl;
+}

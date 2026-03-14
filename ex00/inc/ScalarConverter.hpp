@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <climits>
+#include <cerrno>
 
 /**
  * Static Non-instantiable Class
