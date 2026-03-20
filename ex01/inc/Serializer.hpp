@@ -1,30 +1,26 @@
 #ifndef SERIALIZER_HPP
 # define SERIALIZER_HPP
 
-#include <string>
-#include <iostream>
-#include <iomanip>
-#include <limits>
-#include <cmath>
-#include <cstdlib>
-#include <climits>
-#include <cerrno>
+#include <cstdint>
+#include "Data.hpp"
 
 /**
- * Static Non-instantiable Class
+ * @brief Non-instantiable utility class for pointer serialization.
  */
 class Serializer {
 	private:
 			// Orthodox Canonical Form
-			// Private constructors - class cannot be instantiated
+			// Private constructors - forbidden for users
 			Serializer();
 			Serializer(const Serializer& other);
 			Serializer& operator=(const Serializer& other);
 			~Serializer();
 
 	public:
-			static
-			static
+			// Data pointer converter to uintptr_t
+			static uintptr_t	serialize(Data* ptr);
+			// uintptr_t converter to Data pointer
+			static Data*		deserialize(uintptr_t raw);
 };
 
 #endif
