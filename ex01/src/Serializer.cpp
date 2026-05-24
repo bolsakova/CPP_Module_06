@@ -38,5 +38,13 @@ Serializer::~Serializer() {}
  * @brief Reinterprets pointer value an unsigned integer.
  */
 uintptr_t Serializer::serialize(Data* ptr) {
-	
+	return reinterpret_cast<uintptr_t>(ptr);
 }
+
+/**
+ * @brief Reinterprets unsigned integer value as Data pointer.
+ */
+Data* Serializer::deserialize(uintptr_t raw) {
+	return reinterpret_cast<Data*>(raw);
+}
+
