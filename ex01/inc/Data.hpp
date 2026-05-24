@@ -9,7 +9,7 @@
 struct Data {
 	int			id;
 	double		value;
-	std::string	label;	// show that object is real
+	std::string	label;	// shows that object is real
 };
 
 #endif

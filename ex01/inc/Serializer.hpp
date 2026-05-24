@@ -10,7 +10,7 @@
 class Serializer {
 	private:
 			// Orthodox Canonical Form
-			// Private constructors - forbidden for users
+			// Private constructors - forbidden for users, to forbid instantiation
 			Serializer();
 			Serializer(const Serializer& other);
 			Serializer& operator=(const Serializer& other);
@@ -19,7 +19,7 @@ class Serializer {
 	public:
 			// Data pointer converter to uintptr_t
 			static uintptr_t	serialize(Data* ptr);
-			// uintptr_t converter to Data pointer
+			// uintptr_t converter back to Data pointer
 			static Data*		deserialize(uintptr_t raw);
 };
 

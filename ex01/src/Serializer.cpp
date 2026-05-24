@@ -29,3 +29,14 @@ Serializer& Serializer::operator=(const Serializer& other) {
  * @brief Destructor
  */
 Serializer::~Serializer() {}
+
+// ============
+//  Converters
+// ============
+
+/**
+ * @brief Reinterprets pointer value an unsigned integer.
+ */
+uintptr_t Serializer::serialize(Data* ptr) {
+	
+}
