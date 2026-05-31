@@ -1,15 +1,13 @@
-#ifndef DATA_HPP
-# define DATA_HPP
+#ifndef C_HPP
+# define C_HPP
 
-#include <string>
+#include "Base.hpp"
 
 /**
- * @brief Non-empty structure used for serilization test.
+ * @brief Class C, publicly inherits from Base.
  */
-struct Data {
-	int			id;
-	double		value;
-	std::string	label;	// shows that object is real
+class C : public Base {
+	// empty by task requirements
 };
 
 #endif
