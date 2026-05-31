@@ -1,26 +1,26 @@
-#ifndef SERIALIZER_HPP
-# define SERIALIZER_HPP
+#ifndef IDENTIFY_HPP
+# define IDENTIFY_HPP
 
+#include "Base.hpp"
 #include <cstdint>
-#include "Data.hpp"
 
 /**
- * @brief Non-instantiable utility class for pointer serialization.
+ * @brief Randomly instantiate A, B or C and return as Base*.
  */
-class Serializer {
-	private:
-			// Orthodox Canonical Form
-			// Private constructors - forbidden for users, to forbid instantiation
-			Serializer();
-			Serializer(const Serializer& other);
-			Serializer& operator=(const Serializer& other);
-			~Serializer();
+Base* generate(void);
 
-	public:
-			// Data pointer converter to uintptr_t
-			static uintptr_t	serialize(Data* ptr);
-			// uintptr_t converter back to Data pointer
-			static Data*		deserialize(uintptr_t raw);
-};
+/** 
+ * @brief Identify actual type from Base pointer and print "A", "B" or "C".
+ */
+void identify(Base* p);
+
+/**
+ * @brief Identify actual type from Base reference and print "A", "B" or "C".
+ * 
+ * Note: using a pointer inside this function is forbidden by the task,
+ * so this implementation uses reference dynamic_cast with try/catch.
+ */
+void identify(Base& p);
+
 
 #endif
