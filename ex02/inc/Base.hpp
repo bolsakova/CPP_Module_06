@@ -1,15 +1,14 @@
-#ifndef DATA_HPP
-# define DATA_HPP
-
-#include <string>
+#ifndef BASE_HPP
+# define BASE_HPP
 
 /**
- * @brief Non-empty structure used for serilization test.
+ * @brief Base class with virtual destructor only.
+ * Used as polymorphic root for A, B, C.
  */
-struct Data {
-	int			id;
-	double		value;
-	std::string	label;	// shows that object is real
+class Base {
+	public:
+			// Virtual destructor to enable RTTI via dynamic_cast
+			virtual ~Base() {}
 };
 
 #endif
