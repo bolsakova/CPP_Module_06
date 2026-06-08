@@ -1,32 +1,27 @@
-#include "../inc/Serializer.hpp"
+#include "../inc/Identify.hpp"
 #include <iostream>
 
+/**
+ * @brief Creates several random objects via generate(), then identifies them
+ * using both pointer and reference overloads.
+ */
 int main() {
-	// Test object with real data members
-	Data data;
-	data.id = 42;
-	data.value = 4.2;
-	data.label = "serialization";
-
-	// Original pointer to the object
-	Data* original = &data;
-
-	// Convert pointer to integer and back
-	uintptr_t raw = Serializer::serialize(original);
-	Data* restored = Serializer::deserialize(raw);
-
-	// Print addresses and equality check result
-	std::cout << "Original pointer: " << original << std::endl;
-	std::cout << "Restored pointer: " << restored << std::endl;
-	std::cout << "Pointers equal: "
-	<< (original == restored ? "true" : "false") << std::endl;
-	
-	// Optional data check through restored pointer
-	if (restored == original)
+	// Create and test a few instances
+	for (int i = 0; i < 6; ++i)
 	{
-		std::cout << "id: " << restored->id << std::endl;
-		std::cout << "value: " << restored->value << std::endl;
-		std::cout << "label: " << restored->label << std::endl;
+		Base* obj = generate();
+
+		// identify by pointer
+		std::cout << "identify(Base*): ";
+		identify(obj);
+
+		// identify by reference (no pointers allowed inside)
+		std::cout << "identify(Base&): ";
+		identify(*obj);
+
+		// cleanup
+		delete obj;
+		std::cout << "----" << std::endl;
 	}
 	
 	return 0;
