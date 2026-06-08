@@ -1,50 +1,27 @@
-#include "../inc/Serializer.hpp"
-#include "../inc/Data.hpp"
-
-// ============================================
-//  Orthodox Canonical Form - non-instantiable
-// ============================================
-
-/**
- * @brief Default constructor
- */
-Serializer::Serializer() {}
-
+#include "../inc/Identify.hpp"
+#include "../inc/A.hpp"
+#include "../inc/B.hpp"
+#include "../inc/C.hpp"
+#include <cstdlib>	// rand, srand
+#include <ctime>	// time
+#include <iostream>
 
 /**
- * @brief Copy constructor
+ * @brief Seed RNG on first call and return a new instance of A, B, C.
  */
-Serializer::Serializer(const Serializer& other) { (void)other; }
+Base* generate(void) {
+	// Seed once (use time-based seed)
+	static bool seeded = false;
+	if (!seeded) {
+		std::srand(static_cast<unsigned int>(std::time(nullptr)));
+		seeded = true;
+	}
 
-
-/**
- * @brief Assignment operator
- */
-Serializer& Serializer::operator=(const Serializer& other) {
-	(void)other;
-	return *this;
+	int r = std::rand() % 3;	// 0,1,2
+	if (r == 0)
+		return new A();
+	else if (r == 1)
+		return new B();
+	else
+		return new C();
 }
-
-/**
- * @brief Destructor
- */
-Serializer::~Serializer() {}
-
-// ============
-//  Converters
-// ============
-
-/**
- * @brief Reinterprets pointer value an unsigned integer.
- */
-uintptr_t Serializer::serialize(Data* ptr) {
-	return reinterpret_cast<uintptr_t>(ptr);
-}
-
-/**
- * @brief Reinterprets unsigned integer value as Data pointer.
- */
-Data* Serializer::deserialize(uintptr_t raw) {
-	return reinterpret_cast<Data*>(raw);
-}
-
