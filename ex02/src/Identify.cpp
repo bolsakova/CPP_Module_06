@@ -25,3 +25,29 @@ Base* generate(void) {
 	else
 		return new C();
 }
+
+/**
+ * @brief Identify actual type using pointer dynamic_cast checks.
+ */
+void identify(Base* p) {
+	// null check
+	if (!p) {
+		std::cout << "Null pointer" << std::endl;
+		return;
+	}
+	// Try each cast, pointer cast returns nullptr on failure
+	if (dynamic_cast<A*>(p) != nullptr) {
+		std::cout << "A" << std::endl;
+		return;
+	}
+	if (dynamic_cast<B*>(p) != nullptr) {
+		std::cout << "B" << std::endl;
+		return;
+	}
+	if (dynamic_cast<C*>(p) != nullptr) {
+		std::cout << "C" << std::endl;
+		return;
+	}
+	// Fallback (shouldn't happen for this task)
+	std::cout << "Unknown" << std::endl;
+}
