@@ -51,3 +51,36 @@ void identify(Base* p) {
 	// Fallback (shouldn't happen for this task)
 	std::cout << "Unknown" << std::endl;
 }
+
+/**
+ * @brief Identify actual type using reference dynamic_cast and exceptions.
+ * Doesn't use any7 pointer inside this function.
+ */
+void identify(Base& p) {
+	// Try to dynamic_cast to reference types
+	// dynamic_cast<T&> throws if fails
+	try {
+		(void)dynamic_cast<A&>(p);
+		std::cout << "A" << std::endl;
+		return;
+	} catch (...) {
+		// not A
+	}
+	try {
+		(void)dynamic_cast<B&>(p);
+		std::cout << "B" << std::endl;
+		return;
+	} catch (...) {
+		// not B
+	}
+	try {
+		(void)dynamic_cast<C&>(p);
+		std::cout << "C" << std::endl;
+		return;
+	} catch (...) {
+		// not C
+	}
+	
+	// Fallback (shouldn't happen)
+	std::cout << "Unknown" << std::endl;
+}
