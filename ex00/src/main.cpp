@@ -75,7 +75,7 @@ int main(int ac, char *av[]) {
 		return 0;
 	}
 
-	std::cerr << "Usage: ./convert <literal>" << std::endl;
-	std::cerr << "   or: ./convert --test" << std::endl;
+	std::cerr << "Usage: ./ex00 <literal>" << std::endl;
+	std::cerr << "   or: ./ex00 --test" << std::endl;
 	return 1;
 }
