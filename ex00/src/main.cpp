@@ -12,9 +12,9 @@ static void runOne(const std::string& literal) {
 static void runAllTests() {
 	const std::string tests[] = {
 		// char
-		"'a'",
-		"'*'",
-		"'0'",
+		"a",
+		"*",
+		"v",
 		
 		// int
 		"0",
