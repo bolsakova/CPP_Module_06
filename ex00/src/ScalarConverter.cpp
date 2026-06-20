@@ -1,5 +1,8 @@
 #include "../inc/ScalarConverter.hpp"
 
+#include <cctype>
+#include <stdexcept>
+
 // ============================================
 //  Orthodox Canonical Form - non-instantiable
 // ============================================
@@ -34,14 +37,14 @@ ScalarConverter::~ScalarConverter() {}
 // ===============================
 
 /**
- * @brief Checks if literal is a char ('c')
+ * @brief Checks whether literal is a single printable character
  * @param literal String to check
  * @return True if char literal
  */
 bool ScalarConverter::isChar(const std::string& literal) {
-	return (literal.length() == 3 &&
-			literal[0] == '\'' &&
-			literal[2] == '\'');
+	return (literal.length() == 1 &&
+			std::isprint(static_cast<unsigned char>(literal[0])) &&
+			!std::isdigit(static_cast<unsigned char>(literal[0])));
 }
 
 /**
@@ -61,7 +64,7 @@ bool ScalarConverter::isInt(const std::string& literal) {
 		return false;
 	
 	while (i < literal.length()) {
-		if (!std::isdigit(literal[i]))
+		if (!std::isdigit(static_cast<unsigned char>(literal[i])))
 			return false;
 		i++;
 	}
@@ -83,11 +86,14 @@ bool ScalarConverter::isFloat(const std::string& literal) {
 		return false;
 	
 	std::string withoutF = literal.substr(0, literal.length() - 1);
-
 	if (withoutF.find('.') == std::string::npos)
 		return false;
 	
-	return true;
+	char* end = NULL;
+	errno = 0;
+	(void)std::strtod(withoutF.c_str(), &end);
+	
+	return (end != withoutF.c_str() && *end == '\0' && errno != ERANGE);
 }
 
 /**
@@ -107,7 +113,11 @@ bool ScalarConverter::isDouble(const std::string& literal) {
 	if (literal[literal.length() - 1] == 'f')
 		return false;
 
-	return true;
+	char* end = NULL;
+    errno = 0;
+    (void)std::strtod(literal.c_str(), &end);
+
+    return (end != literal.c_str() && *end == '\0' && errno != ERANGE);
 }
 
 /**
@@ -248,7 +258,7 @@ void ScalarConverter::convert(const std::string& literal) {
 	// 1) char literal: 'c'
 	if (isChar(literal))
 	{
-		convertFromChar(literal[1]);
+		convertFromChar(literal[0]);
 		return;
 	}
 
@@ -283,12 +293,12 @@ void ScalarConverter::convert(const std::string& literal) {
 			convertFromFloat(-std::numeric_limits<float>::infinity());
 		else
 		{
+			std::string withoutF = literal.substr(0, literal.length() - 1);
 			char* end = NULL;
 			errno = 0;
-			double value = std::strtod(literal.c_str(), &end);
+			double value = std::strtod(withoutF.c_str(), &end);
 	
-			if (errno == ERANGE || end == literal.c_str() || *end != 'f'
-				|| *(end + 1) != '\0')
+			if (errno == ERANGE || end == withoutF.c_str() || *end != '\0')
 			{
 				std::cout << "char: impossible" << std::endl;
 				std::cout << "int: impossible" << std::endl;
