@@ -17,6 +17,7 @@ int main() {
 
 	// Print addresses and equality check result
 	std::cout << "Original pointer: " << original << std::endl;
+	std::cout << "Raw number: " << raw << std::endl;
 	std::cout << "Restored pointer: " << restored << std::endl;
 	std::cout << "Pointers equal: "
 	<< (original == restored ? "true" : "false") << std::endl;
